@@ -1,0 +1,22 @@
+[
+    {
+        "name": "default",
+        "type": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "username": "postgres",
+        "password": "postgres",
+        "database": "graphql-demo",
+        "logging": true,
+        "max_query_execution_time": 1000,
+        "entities": [
+            "src/**/*.entity.ts"
+        ],
+        "migrations": [
+            "src/migration/**/*.ts"
+        ],
+        "cli": {
+            "migrationsDir": "src/migration"
+        }
+    }
+]

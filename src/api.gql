@@ -1,0 +1,22 @@
+type City {
+  id: Int!
+  name: String!
+  slug: String!
+  type: String!
+  nameWithType: String!
+
+  districts: [District]
+}
+
+type District {
+  id: Int!
+  name: String!
+  slug: String!
+  type: String!
+  nameWithType: String!
+}
+
+type Query {
+  city(id: Int!): City
+  district(id: Int!): District
+}
