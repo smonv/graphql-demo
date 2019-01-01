@@ -10,8 +10,12 @@ export class DistrictService {
     private readonly manager: EntityManager,
   ) {}
 
-  async getManyByCityId(cid: number, fields?: string[]): Promise<District[]> {
-    let qb = this.manager.createQueryBuilder(District, 'd').where('d."cityId" = :cid', { cid });
+  async getManyByCityId(cid: number, fields?: string[], options: { limit?: number } = {}): Promise<District[]> {
+    const { limit = 10 } = options;
+    let qb = this.manager
+      .createQueryBuilder(District, 'd')
+      .where('d."cityId" = :cid', { cid })
+      .limit(limit);
 
     if (fields) {
       qb = qb.select(fields.map((field) => `d.${field}`));
