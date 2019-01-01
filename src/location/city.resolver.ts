@@ -25,10 +25,10 @@ export class CityResolver {
   @ResolveProperty('districts')
   async getDistricts(
     @Root() @Parent() city: City,
-    @TypeArg('limit', () => Int, { nullable: true, defaultValue: 10 }) @Args('limit') limit: number,
     @Info() info: GraphQLResolveInfo,
+    @TypeArg('limit', () => Int, { nullable: true, defaultValue: 10 }) @Args('limit') limit: number,
   ): Promise<District[]> {
     const { id } = city;
-    return this.districtService.getManyByCityId(id, Object.keys(graphqlFields(info)));
+    return this.districtService.getManyByCityId(id, Object.keys(graphqlFields(info)), { limit });
   }
 }

@@ -10,13 +10,6 @@ import { CityResolver } from './location/city.resolver';
   imports: [
     TypeOrmModule.forRoot(),
     LocationModule,
-    // GraphQLModule.forRoot({
-    //   typePaths: ['./**/*.gql'],
-    //   definitions: {
-    //     path: join(process.cwd(), 'src/graphql.ts'),
-    //     outputAs: 'class',
-    //   },
-    // }),
     GraphQLModule.forRootAsync({
       useFactory: async () => {
         const config: GqlModuleOptions = {
