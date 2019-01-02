@@ -10,11 +10,12 @@ export class CityService {
     private readonly manager: EntityManager,
   ) {}
 
-  async getOne(id: number, fields?: string[]): Promise<City | undefined> {
-    if (fields) {
+  async getOne(id: number, cityFields?: string[], districtFields?: string[]): Promise<City | undefined> {
+    if (cityFields) {
       return this.manager
         .createQueryBuilder(City, 'c')
-        .select(fields.map((field) => `c.${field}`))
+        .leftJoinAndSelect('c.districts', 'd')
+        .select(cityFields.map((field) => `c.${field}`).concat(districtFields.map((df) => `d.${df}`)))
         .getOne();
     }
     return this.manager.findOne(City, id);

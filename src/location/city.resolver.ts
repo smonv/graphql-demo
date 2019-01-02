@@ -18,7 +18,10 @@ export class CityResolver {
     @TypeArg('id', () => Int) @Args('id') id: number,
     @Info() info: GraphQLResolveInfo,
   ): Promise<City | undefined> {
-    return this.cityService.getOne(id, Object.keys(graphqlFields(info)).filter((f) => f !== 'districts'));
+    const cityQuery = graphqlFields(info) as City;
+    const cityFields = Object.keys(cityQuery);
+    const districtFields = Object.keys(cityQuery.districts);
+    return this.cityService.getOne(id, cityFields.filter((f) => f !== 'districts'), districtFields);
   }
 
   @FieldResolver(() => [District], { name: 'districts', defaultValue: [] })
@@ -28,7 +31,8 @@ export class CityResolver {
     @Info() info: GraphQLResolveInfo,
     @TypeArg('limit', () => Int, { nullable: true, defaultValue: 10 }) @Args('limit') limit: number,
   ): Promise<District[]> {
-    const { id } = city;
-    return this.districtService.getManyByCityId(id, Object.keys(graphqlFields(info)), { limit });
+    return city.districts;
+    // const { id } = city;
+    // return this.districtService.getManyByCityId(id, Object.keys(graphqlFields(info)), { limit });
   }
 }
